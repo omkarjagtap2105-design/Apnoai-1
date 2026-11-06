@@ -1,0 +1,701 @@
+/* ============================================================
+   Personal Developer Portfolio — style.css
+   Omkar Jagtap
+   Dark mode is DEFAULT. Light mode activated via body.light-mode
+   ============================================================
+   TABLE OF CONTENTS
+   1.  Universal Reset & Base Styles
+   2.  CSS Custom Properties (Theme Variables)
+   3.  Navigation Bar
+   4.  Hero Section
+   5.  About Section
+   6.  Skills / Cards Section
+   7.  Contact Section
+   8.  Footer
+   9.  Buttons
+   10. Animations
+   11. Accessibility — Focus States
+   12. Light Mode Overrides
+   13. Responsive Design
+   ============================================================ */
+
+/* ============================================================
+   1. Universal Reset & Base Styles
+   ============================================================ */
+
+/* Reset all margins, paddings, and set border-box so padding
+   never causes unexpected layout overflow */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Smooth scrolling when clicking nav anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent horizontal overflow at all viewport sizes */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Base body styles — dark mode is the default */
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  /* Smooth theme transition on background, color, and border */
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ============================================================
+   2. CSS Custom Properties (Theme Variables)
+   ----------------------------------------------------------
+   Using CSS variables makes the theme system easy to maintain.
+   Dark mode values are the defaults on <body>.
+   Light mode values are set on body.light-mode (Section 12).
+   ============================================================ */
+:root {
+  /* Accent colors — same in both themes */
+  --accent-primary: #a78bfa;    /* light purple */
+  --accent-button: #7c3aed;     /* button background */
+  --accent-deep: #312e81;       /* deep purple for gradients */
+  --accent-button-hover: #6d28d9;
+
+  /* Dark mode colors (default) */
+  --bg: #0b1020;
+  --surface: #1e293b;
+  --header-footer: #111827;
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+
+  /* Hero gradient for dark mode */
+  --hero-gradient: linear-gradient(135deg, #111827, #312e81);
+
+  /* Tech-list chip background */
+  --chip-bg: rgba(167, 139, 250, 0.15);
+
+  /* Card hover shadow */
+  --card-shadow: rgba(167, 139, 250, 0.25);
+}
+
+/* ============================================================
+   3. Navigation Bar
+   ============================================================ */
+
+/* Sticky header stays at top while scrolling */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--header-footer);
+  padding: 20px 8%;
+  transition: background-color 0.3s ease;
+}
+
+/* Flexbox layout: logo left, nav links center-right, toggle right */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+/* Logo / brand name */
+.logo {
+  color: var(--accent-primary);
+  font-size: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+/* Navigation links list */
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 25px;
+}
+
+/* Smooth color transition on nav link hover */
+.nav-links a {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--accent-primary);
+}
+
+/* Theme toggle button */
+#themeToggle {
+  padding: 10px 15px;
+  border: 1px solid var(--accent-primary);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--accent-primary);
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  /* Accessibility: minimum 44px tap target */
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+#themeToggle:hover {
+  background: rgba(167, 139, 250, 0.1);
+}
+
+/* ============================================================
+   4. Hero Section
+   ============================================================ */
+
+/* Full-height centered hero with gradient background */
+.hero {
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 50px 8%;
+  background: var(--hero-gradient);
+  transition: background 0.3s ease;
+}
+
+/* Small uppercase eyebrow text above the heading */
+.hero .eyebrow {
+  color: var(--accent-primary);
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Main hero heading */
+.hero h1 {
+  font-size: clamp(32px, 6vw, 48px);
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+/* Gradient text on the hero name span */
+.gradient-name {
+  background: linear-gradient(135deg, #a78bfa, #7c3aed, #312e81);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Subtitle below the main heading */
+.hero h2 {
+  font-size: clamp(18px, 4vw, 23px);
+  margin-bottom: 20px;
+  color: var(--text-primary);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* Hero description paragraph */
+.hero .hero-description {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 600px;
+  transition: color 0.3s ease;
+}
+
+/* Container for hero buttons */
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ============================================================
+   5. About Section
+   ============================================================ */
+
+.about {
+  padding: 80px 8%;
+  text-align: center;
+}
+
+/* Section headings share styling */
+.about h2,
+.services h2,
+.contact h2 {
+  font-size: clamp(26px, 5vw, 32px);
+  color: var(--accent-primary);
+  margin-bottom: 35px;
+  transition: color 0.3s ease;
+}
+
+/* About content: centered, max-width for readability, comfortable line-height */
+.about-content {
+  max-width: 750px;
+  margin: 0 auto;
+  line-height: 1.8; /* between 1.6 and 1.8 as specified */
+  color: var(--text-secondary);
+  font-size: 17px;
+  transition: color 0.3s ease;
+}
+
+/* ============================================================
+   6. Skills / Cards Section
+   ============================================================ */
+
+.services {
+  padding: 80px 8%;
+  text-align: center;
+}
+
+/* Cards container — flexbox, evenly spaced */
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+
+/* Individual skill card */
+.card {
+  background: var(--surface);
+  padding: 30px;
+  border-radius: 12px;
+  flex: 1 1 280px;
+  max-width: 350px;
+  min-width: 260px;
+  border: 1px solid transparent;
+  transition: transform 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hover: lift card up and highlight border with accent color */
+.card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent-primary);
+  box-shadow: 0 8px 30px var(--card-shadow);
+}
+
+/* Card title */
+.card h3 {
+  color: var(--accent-primary);
+  margin-bottom: 15px;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+/* Card description text */
+.card p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  transition: color 0.3s ease;
+}
+
+/* Technology list inside cards — chips layout */
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 15px;
+  list-style: none;
+}
+
+/* Individual tech chip */
+.tech-list li {
+  display: inline-block;
+  padding: 5px 12px;
+  background: var(--chip-bg);
+  color: var(--accent-primary);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================================
+   7. Contact Section
+   ============================================================ */
+
+.contact {
+  padding: 80px 8%;
+  text-align: center;
+}
+
+/* Professional invitation paragraph */
+.contact-invitation {
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.8;
+  font-size: 17px;
+  transition: color 0.3s ease;
+}
+
+/* Contact cards grid */
+.contact-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Individual contact card — styled as clickable tiles */
+.contact-card {
+  background: var(--surface);
+  padding: 35px 25px;
+  border-radius: 14px;
+  flex: 1 1 280px;
+  max-width: 320px;
+  min-width: 260px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid transparent;
+  transition: transform 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hover: lift card and highlight border */
+.contact-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent-primary);
+  box-shadow: 0 8px 30px var(--card-shadow);
+}
+
+/* Icon container — circular accent background */
+.contact-card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--chip-bg);
+  color: var(--accent-primary);
+  margin-bottom: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Icon scales up slightly on card hover */
+.contact-card:hover .contact-card-icon {
+  transform: scale(1.1);
+}
+
+/* Card title */
+.contact-card h3 {
+  color: var(--accent-primary);
+  font-size: 20px;
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+/* Main value (email, username, name) */
+.contact-card-value {
+  color: var(--text-secondary);
+  font-size: 15px;
+  margin-bottom: 14px;
+  word-break: break-word;
+  transition: color 0.3s ease;
+}
+
+/* Action text — "Send an Email →" etc. */
+.contact-card-action {
+  color: var(--accent-primary);
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.contact-card:hover .contact-card-action {
+  color: var(--accent-button);
+}
+
+/* Light mode overrides for contact cards */
+.light-mode .contact-card h3 {
+  color: #7c3aed;
+}
+
+.light-mode .contact-card-value {
+  color: #334155;
+}
+
+.light-mode .contact-card-action {
+  color: #7c3aed;
+}
+
+.light-mode .contact-card:hover .contact-card-action {
+  color: #5b21b6;
+}
+
+/* ============================================================
+   8. Footer
+   ============================================================ */
+
+/* Centered footer, consistent with header background */
+footer {
+  background: var(--header-footer);
+  text-align: center;
+  padding: 25px;
+  color: var(--text-secondary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================================
+   9. Buttons
+   ============================================================ */
+
+/* Primary button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25px;
+  padding: 13px 25px;
+  background: var(--accent-button);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 16px;
+  /* Accessibility: minimum 44px tap target */
+  min-height: 44px;
+  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover: lift button and shift color */
+.btn:hover {
+  transform: translateY(-3px);
+  background: var(--accent-button-hover);
+}
+
+/* Secondary button — outline style to differentiate from primary */
+.secondary-btn {
+  background: transparent;
+  border: 2px solid var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.secondary-btn:hover {
+  background: rgba(167, 139, 250, 0.15);
+  color: #ffffff;
+}
+
+/* ============================================================
+   10. Animations
+   ============================================================ */
+
+/* Hero fade-in / slide-up on page load */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply fade-in to hero elements with staggered delays */
+.hero .eyebrow,
+.hero h1,
+.hero h2,
+.hero .hero-description,
+.hero .hero-buttons {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.hero h1 {
+  animation-delay: 0.1s;
+}
+.hero h2 {
+  animation-delay: 0.2s;
+}
+.hero .hero-description {
+  animation-delay: 0.3s;
+}
+.hero .hero-buttons {
+  animation-delay: 0.4s;
+}
+
+/* ============================================================
+   11. Accessibility — Focus States
+   ============================================================ */
+
+/* Visible focus outline for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   12. Light Mode Overrides — body.light-mode
+   ----------------------------------------------------------
+   When the body has .light-mode class, these variables
+   override the dark mode defaults defined in :root.
+   All elements using var(--*) update automatically.
+   ============================================================ */
+body.light-mode {
+  --bg: #f1f5f9;
+  --surface: #ffffff;
+  --header-footer: #e2e8f0;
+  --text-primary: #111827;
+  --text-secondary: #334155;
+  --hero-gradient: linear-gradient(135deg, #dbeafe, #ede9fe);
+  --chip-bg: rgba(124, 58, 237, 0.12);
+  --card-shadow: rgba(124, 58, 237, 0.2);
+  --accent-primary: #7c3aed;
+}
+
+/* Nav link hover in light mode */
+.light-mode .nav-links a:hover {
+  color: #5b21b6;
+}
+
+/* Logo in light mode */
+.light-mode .logo {
+  color: #7c3aed;
+}
+
+/* Theme toggle button in light mode */
+.light-mode #themeToggle {
+  color: #111827;
+  border-color: #7c3aed;
+}
+
+.light-mode #themeToggle:hover {
+  background: rgba(124, 58, 237, 0.1);
+}
+
+/* Hero subtitle in light mode */
+.light-mode .hero h2 {
+  color: #111827;
+}
+
+/* Secondary button in light mode */
+.light-mode .secondary-btn {
+  border-color: #7c3aed;
+  color: #7c3aed;
+}
+
+.light-mode .secondary-btn:hover {
+  background: rgba(124, 58, 237, 0.1);
+  color: #111827;
+}
+
+/* (Contact card light-mode overrides are handled in Section 7) */
+
+/* ============================================================
+   13. Responsive Design
+   ============================================================ */
+
+/* ---- Tablet (max-width: 1024px) ----
+   Cards may wrap to 2 columns */
+@media (max-width: 1024px) {
+  .card {
+    flex: 1 1 300px;
+    max-width: 320px;
+  }
+
+  .about,
+  .services,
+  .contact {
+    padding: 70px 6%;
+  }
+}
+
+/* ---- Mobile (max-width: 768px) ----
+   Nav stacks vertically, hero fonts shrink, cards go full-width */
+@media (max-width: 768px) {
+  /* Navigation stacks below logo, centered */
+  nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-links {
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Reduce hero font sizes on mobile */
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .hero h2 {
+    font-size: 18px;
+  }
+
+  /* Reduce section padding on mobile */
+  .about,
+  .services,
+  .contact {
+    padding: 55px 5%;
+  }
+
+  /* Cards go full-width */
+  .card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  /* Hero buttons stack vertically on mobile */
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .secondary-btn {
+    margin-left: 0;
+  }
+}
+
+/* ---- Small mobile (max-width: 480px) ----
+   Further reduce padding and font sizes */
+@media (max-width: 480px) {
+  header {
+    padding: 15px 5%;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+  }
+
+  .hero {
+    padding: 40px 5%;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
